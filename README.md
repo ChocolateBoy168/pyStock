@@ -11,7 +11,8 @@
     - days-: 其中損失的天數
     - period: morning 針對早盤
     - stock: MTX00 針對小台指數
-- []
+  
+![image](https://github.com/ChocolateBoy168/pyStock/blob/main/img/400%E5%A4%A9%E7%9A%84%E7%AD%96%E7%95%A5%E5%9B%9E%E6%B8%AC.png)
 
 # 潛在風險
 
