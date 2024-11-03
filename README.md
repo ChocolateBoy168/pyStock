@@ -30,37 +30,37 @@
 ```json 
 {
   "version": "0.0.0",
-  "stop_loss": 99,
   // 停損
-  "stop_profit": 199,
+  "stop_loss": 99,
   // 停利
-  "morning_start_enter_time": 84500,
+  "stop_profit": 199,
   //早盤開始進場時間
-  "morning_last_enter_time": 133000,
+  "morning_start_enter_time": 84500,
   //早盤最後進場時間
-  "morning_stop_expired_time": 134430,
+  "morning_last_enter_time": 133000,
   //早盤逾時出場時間
-  "night_start_enter_time": 150000,
+  "morning_stop_expired_time": 134430,
   //夜盤開始進場時間
-  "night_last_enter_time": 44500,
+  "night_start_enter_time": 150000,
   //夜盤最後進場時間
-  "night_stop_expired_time": 45939,
+  "night_last_enter_time": 44500,
   //夜盤逾時出場時間
-  "request_multi_stockNo_ticks": true,
+  "night_stop_expired_time": 45939,
   //是否大台小台一起判斷
+  "request_multi_stockNo_ticks": true,
   "request_signal": {
     "stockNo": {
       "MTX00": {
-        "master_unit": 20,
         // 小台下單量大於20, 表示主力的量
-        "slave_unit": 3
+        "master_unit": 20,
         // 小台下單小於3, 表示散戶的量
+        "slave_unit": 3
       },
       "TX00": {
-        "master_unit": 20,
         // 大台下單量大於20, 表示主力的量
-        "slave_unit": 3
+        "master_unit": 20,
         // 大台下單小於3, 表示散戶的量
+        "slave_unit": 3
       }
     }
   }
@@ -73,10 +73,10 @@
 {
   "version": "0.0.0",
   "stockNos_achieve_of": {
-    "in": "allOf",
     //進場 MTX00 與 TX00 都要一起考量
-    "out": "allOf"
+    "in": "allOf",
     //出場 MTX00 與 TX00 都要一起考量
+    "out": "allOf"
   },
   "stockNo": {
     "MTX00": {
@@ -84,7 +84,6 @@
         {
           // 在小台中每20個tick中有量買進大於25就進場
           "trigger": true,
-          //是否觸發
           "name": "call1",
           "matches": [
             25
@@ -106,8 +105,8 @@
     },
     "TX00": {
       "dams": [
+        // 在大台中每20個tick中有量買進大於25就進場
         {
-          // 在大台中每20個tick中有量買進大於25就進場
           "trigger": true,
           "name": "call1",
           "matches": [
@@ -139,24 +138,24 @@
 {
   "version": "0.0.0",
   "stockNos_achieve_of": {
-    "in": "allOf",
     // 進場大台與小台條件都符合
-    "out": "allOf"
+    "in": "allOf",
     // 出場大台與小台條件都符合
+    "out": "allOf"
   },
   "info": "in out 值是絕對值, ex: if 250 ,對call而言是250,對put而言是-250",
   "stockNo": {
     "MTX00": {
-      "in": -500,
       // 小台只要量總和是-500以上就可進場
-      "out": -550
+      "in": -500,
       // 小台只要量總和是-500以下就可出場
+      "out": -550
     },
     "TX00": {
-      "in": -500,
       // 大台只要量總和是-500以上就可進場
-      "out": -550
+      "in": -500,
       // 大台只要量總和是-500以下就可出場
+      "out": -550
     }
   }
 }
@@ -165,9 +164,10 @@
 - 策略種子 fomKma(aa_slope_in_60_20_10_5_out_60) 表示如下
 
 ```json 
-{//計算量的均線, 以60秒為一個單位, 大台與小台 5分/10分/20分/60分的均量 斜率都向上 才可進場, 60分的量斜率若向下就出場 
+{
   "version": "0.0.0",
   "rate_of_second": 60,
+  ///計算量的均線, 以60秒為一個單位
   "rule": "slope",
   "stockNos_achieve_of": {
     "in": "allOf",
@@ -175,6 +175,7 @@
   },
   "stockNo": {
     "MTX00": {
+      // 小台中, 5分/10分/20分/60分的均量 斜率都向上 才可進場, 遇到60分的量斜率若向下就出場 
       "in": [
         5,
         10,
@@ -186,6 +187,7 @@
       ]
     },
     "TX00": {
+      // 大台中, 5分/10分/20分/60分的均量 斜率都向上 才可進場, 遇到60分的量斜率若向下就出場 
       "in": [
         5,
         10,
@@ -202,5 +204,3 @@
 ```
 
 - 策略種子 containNight(true): 表示從計算的量是從夜盤開始
-
--
