@@ -11,6 +11,7 @@
     - days-: 其中損失的天數
     - period: morning 針對早盤
     - stock: MTX00 針對小台指數
+- []
 
 # 潛在風險
 
