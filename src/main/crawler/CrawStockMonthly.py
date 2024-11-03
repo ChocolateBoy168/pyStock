@@ -56,7 +56,7 @@ class TemplateSpider(scrapy.Spider):
     def start_requests(self):
         if not self.beginDate and not self.endDate:
             if True:  # custom year date
-                # todo 查詢網址 http://homewin.sytes.net:8066/aiStock/rest/public/latest/docs.html
+                # todo 查詢網址 http://localhost:8066/aiStock/rest/public/latest/docs.html
                 for key, val in stock_type.items():
                     YY = 112
                     MM = 7  # todo 似乎3號開始陸陸續續公布營收,不要太早改月份,來執行,至少等到出表日期為每個月10號起後再來爬. 不然太早爬,會因top50會抓未公佈的新月營收

@@ -5,7 +5,6 @@
 from src.lib.my_lib.module.LoggerModule import Logger
 from src.lib.my_lib.utils.DatetimeUtil import DatetimeUtil
 
-# Api_Host = "homewin.sytes.net"
 Api_Host = "localhost"
 
 Api_ContextPath = "/aiStock/"
