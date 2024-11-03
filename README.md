@@ -21,18 +21,8 @@
 - 組合策略 = 主力與散戶的量運用 + 均線運用 + 停利或停損
 - 組合策略也是策略種子 strategy_seed 裡多個的json檔 組合而成,可以任意搭配,範例:
 
-```json
-  StraBvm[
-  root(multi_b6)
-][
-  bvm(aa_noBlock_1)
-][
-  fomSumV(aa_3)
-][
-  fomKma(aa_slope_in_60_20_10_5_out_60)
-][
-  containNight(true)
-]
+```text
+  StraBvm[root(multi_b6)][bvm(aa_noBlock_1)][fomSumV(aa_3)][fomKma(aa_slope_in_60_20_10_5_out_60)][containNight(true)]
 ```
 
 - 策略種子 root(multi_b6).json 表示如下
