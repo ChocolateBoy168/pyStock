@@ -1,0 +1,25 @@
+{
+  "version": "0.0.0",
+  "stop_loss": 199,
+  "stop_profit": 199,
+  "morning_start_enter_time": 84501,
+  "morning_last_enter_time": 133000,
+  "morning_stop_expired_time": 134430,
+  "night_start_enter_time": 150000,
+  "night_last_enter_time": 44500,
+  "night_stop_expired_time": 45939,
+  "request_multi_stockNo_ticks": true,
+  "request_signal": {
+	"stockNo": {
+	  "MTX00": {
+		"master_unit": 20,
+		"slave_unit": 3
+	  },
+	  "TX00": {
+		"master_unit": 20,
+		"slave_unit": 3
+	  }
+	}
+  },
+  "################": "################"
+}

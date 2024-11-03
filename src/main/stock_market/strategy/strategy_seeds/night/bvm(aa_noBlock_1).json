@@ -1,0 +1,54 @@
+{
+  "version": "0.0.0",
+  "stockNos_achieve_of": {
+	"in": "allOf",
+	"out": "allOf"
+  },
+  "stockNo": {
+	"MTX00": {
+	  "dams": [
+		{
+		  "trigger": true,
+		  "name": "call1",
+		  "matches": [
+			30
+		  ],
+		  "max_frame_size": 20,
+		  "blocks": []
+		},
+		{
+		  "trigger": true,
+		  "name": "put1",
+		  "matches": [
+			-30
+		  ],
+		  "max_frame_size": 20,
+		  "blocks": []
+		}
+	  ]
+	},
+	"TX00": {
+	  "dams": [
+		{
+		  "trigger": true,
+		  "name": "call1",
+		  "matches": [
+			30
+		  ],
+		  "max_frame_size": 20,
+		  "blocks": []
+		},
+		{
+		  "trigger": true,
+		  "name": "put1",
+		  "matches": [
+			-30
+		  ],
+		  "max_frame_size": 20,
+		  "blocks": []
+		}
+	  ]
+	}
+  },
+  "################": "################"
+}

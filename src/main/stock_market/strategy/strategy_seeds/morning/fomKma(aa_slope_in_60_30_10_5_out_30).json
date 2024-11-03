@@ -1,0 +1,33 @@
+{
+  "version": "0.0.0",
+  "rate_of_second": 60,
+  "rule": "slope",
+  "stockNos_achieve_of": {
+	"in": "allOf",
+	"out": "allOf"
+  },
+  "stockNo": {
+	"MTX00": {
+	  "in": [
+		5,
+		10,
+		30,
+		60
+	  ],
+	  "out": [
+		30
+	  ]
+	},
+	"TX00": {
+	  "in": [
+		5,
+		10,
+		30,
+		60
+	  ],
+	  "out": [
+		30
+	  ]
+	}
+  }
+}

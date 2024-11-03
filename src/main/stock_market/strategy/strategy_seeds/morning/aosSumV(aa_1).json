@@ -1,0 +1,22 @@
+{
+  "version": "0.0.0",
+  "stockNos_achieve_of": {
+	"in": "allOf",
+	"out": "allOf"
+  },
+  "info": [
+	"in out 值是絕對值, ex: if 250, 對call而言是250, 對put而言是-250",
+	"in 必須小於 out",
+	"in與out之間 需有個緩衝 ,不然in完之後,很快因out而平倉掉"
+  ],
+  "stockNo": {
+	"MTX00": {
+	  "in": 100,
+	  "out": 125
+	},
+	"TX00": {
+	  "in": 100,
+	  "out": 125
+	}
+  }
+}

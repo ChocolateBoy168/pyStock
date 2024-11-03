@@ -1,0 +1,36 @@
+{
+  "version": "0.0.0",
+  "stockNos_achieve_of": {
+	"in": "allOf",
+	"out": "allOf"
+  },
+  "info": [],
+  "stockNo": {
+	"MTX00": {
+	  "open": {
+		"call": [
+		  -100,
+		  300
+		],
+		"put": [
+		  -400,
+		  100
+		]
+	  },
+	  "close": {}
+	},
+	"TX00": {
+	  "open": {
+		"call": [
+		  -100,
+		  300
+		],
+		"put": [
+		  -400,
+		  100
+		]
+	  },
+	  "close": {}
+	}
+  }
+}

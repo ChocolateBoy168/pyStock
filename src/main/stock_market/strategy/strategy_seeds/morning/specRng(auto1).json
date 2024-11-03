@@ -1,0 +1,40 @@
+{
+  "version": "0.0.0",
+  "stockNos_achieve_of": {
+	"in": "allOf",
+	"out": "allOf"
+  },
+  "info": [
+	"open => call 與 put 的 array 從小到大排序",
+	"目前只實作在進場open用(ex:可計算offset大概配合籌碼成本位置來進場), 出場close尚未實作",
+	"有個問題點,offset應該是用前一日的收盤價為基準才對,不然都相對於第一個tick不准,但因前一日南實作,可能須拿夜盤的第一個tick來判斷,當作前一日的收盤價"
+  ],
+  "stockNo": {
+	"MTX00": {
+	  "open": {
+		"call": [
+		  -999,
+		  -50
+		],
+		"put": [
+		  -50,
+		  999
+		]
+	  },
+	  "close": {}
+	},
+	"TX00": {
+	  "open": {
+		"call": [
+		  -999,
+		  -50
+		],
+		"put": [
+		  -50,
+		  999
+		]
+	  },
+	  "close": {}
+	}
+  }
+}
