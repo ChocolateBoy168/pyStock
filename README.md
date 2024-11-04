@@ -21,7 +21,7 @@
 # 策略組合介紹與範例
 
 - 組合策略 = 主力與散戶的量運用 + 均線運用 + 停利或停損
-- 組合策略也是策略種子 strategy_seed 裡多個的json檔 組合而成,可以任意搭配,範例:
+- 組合策略是多個策略種子 strategy_seed 裡json配置檔 組合而成,可以任意搭配,範例:
 
 ```text
   StraBvm[root(multi_b6)][bvm(aa_noBlock_1)][fomSumV(aa_3)][fomKma(aa_slope_in_60_20_10_5_out_60)][containNight(true)]
@@ -205,4 +205,4 @@
 
 ```
 
-- 策略種子 containNight(true): 表示從計算的量是從夜盤開始
+- 策略種子 containNight(true): 表示計算的量是從夜盤開始
