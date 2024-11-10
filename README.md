@@ -1,4 +1,4 @@
-# 目的
+# Purpose
 
 - Crawling data from the futures exchange for backtesting early morning ticks of the Mini Taiwan Index Futures (MTX) from 2020 to 2022.
 - Custom strategies are defined, and various strategy combinations are used to determine entry and exit signals.
