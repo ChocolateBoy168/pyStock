@@ -1,90 +1,91 @@
 # 目的
 
-- 爬期貨交易所,從2020到2022年,爬兩年期間的小台指早盤ticks進行回測
-- 自訂策略, 透過不同策略的組合, 判斷進出訊號
-- 回測出的結果可以看到
-    - costs: 是花費的成本點數
-    - profits: 是扣掉成本後的獲利點數
-    - 獲利(%): 有些組合策略獲利高達200%
-    - days: 回測的天數
-    - days+: 其中獲利的天數
-    - days-: 其中損失的天數
-    - period: morning 針對早盤
-    - stock: MTX00 針對小台指數
+- Crawling data from the futures exchange for backtesting early morning ticks of the Mini Taiwan Index Futures (MTX) from 2020 to 2022.
+- Custom strategies are defined, and various strategy combinations are used to determine entry and exit signals.
+- The backtesting results include:
+    - costs: the cost in points
+    - profits: net profit in points after deducting costs
+    - profit(%): some strategy combinations achieve up to 200% profit
+    - days: the number of test days
+    - days+: the number of profitable days
+    - days-: the number of loss-making days
+    - period: morning, focusing on early sessions
+    - stock: MTX00, specifically for the Mini Taiwan Index Futures
   
 ![image](https://github.com/ChocolateBoy168/pyStock/blob/main/img/400%E5%A4%A9%E7%9A%84%E7%AD%96%E7%95%A5%E5%9B%9E%E6%B8%AC.png)
 
-# 潛在風險
+# Potential Risks
 
-- 上面回測的獲利,是沒有考慮滑價.
+- The backtesting profits mentioned above do not take slippage into account.
 
-# 策略組合介紹與範例
+# Strategy Combination Introduction and Examples
 
-- 組合策略 = 主力與散戶的量運用 + 均線運用 + 停利或停損
-- 組合策略是多個策略種子 strategy_seed 裡json配置檔 組合而成,可以任意搭配,範例:
+- Combination strategy = (use of volume from major players and retail investors) + (moving average application) + (take profit or stop loss)
+- The combination strategy is formed by assembling various strategy seeds from JSON configuration files, allowing for flexible combinations. Example:
 
 ```text
   StraBvm[root(multi_b6)][bvm(aa_noBlock_1)][fomSumV(aa_3)][fomKma(aa_slope_in_60_20_10_5_out_60)][containNight(true)]
 ```
 
-- 策略種子 root(multi_b6).json 表示如下
+- The strategy seed [root(multi_b6)] is represented as follows:
 
 ```json 
 {
   "version": "0.0.0",
-  // 停損
+  // Stop loss
   "stop_loss": 99,
-  // 停利
+  // Take profit
   "stop_profit": 199,
-  //早盤開始進場時間
+  // Morning session start entry time
   "morning_start_enter_time": 84500,
-  //早盤最後進場時間
+  // Morning session last entry time
   "morning_last_enter_time": 133000,
-  //早盤逾時出場時間
+  // Morning session stop expired time
   "morning_stop_expired_time": 134430,
-  //夜盤開始進場時間
+  // Night session start entry time
   "night_start_enter_time": 150000,
-  //夜盤最後進場時間
+  // Night session last entry time
   "night_last_enter_time": 44500,
-  //夜盤逾時出場時間
+  // Night session stop expired time
   "night_stop_expired_time": 45939,
-  //是否大台小台一起判斷
+  // Whether to check both large and mini contracts together
   "request_multi_stockNo_ticks": true,
   "request_signal": {
     "stockNo": {
       "MTX00": {
-        // 小台下單量大於20, 表示主力的量
+        // Mini contract order volume greater than 20, indicating major player volume
         "master_unit": 20,
-        // 小台下單小於3, 表示散戶的量
+        // Mini contract order volume less than 3, indicating retail investor volume
         "slave_unit": 3
       },
       "TX00": {
-        // 大台下單量大於20, 表示主力的量
+        // Large contract order volume greater than 20, indicating major player volume
         "master_unit": 20,
-        // 大台下單小於3, 表示散戶的量
+        // Large contract order volume less than 3, indicating retail investor volume
         "slave_unit": 3
       }
     }
   }
 }
+
 ```
 
-- 策略種子 bvm(aa_noBlock_1).json 表示如下
+- The strategy seed [bvm(aa_noBlock_1)] is represented as follows:
 
 ```json 
 {
   "version": "0.0.0",
   "stockNos_achieve_of": {
-    //進場 MTX00 與 TX00 都要一起考量
+    // Entry requires consideration of both MTX00 and TX00 together
     "in": "allOf",
-    //出場 MTX00 與 TX00 都要一起考量
+    // Exit requires consideration of both MTX00 and TX00 together
     "out": "allOf"
   },
   "stockNo": {
     "MTX00": {
       "dams": [
         {
-          // 在小台中每20個tick中有量買進大於25就進場
+          // Enter position if in the mini contract there are more than 25 buy volumes within every 20 ticks
           "trigger": true,
           "name": "call1",
           "matches": [
@@ -94,7 +95,7 @@
           "blocks": []
         },
         {
-          // 在小台中每20個tick中有量賣出大於25就出場
+          // Exit position if in the mini contract there are more than 25 sell volumes within every 20 ticks
           "trigger": true,
           "name": "put1",
           "matches": [
@@ -107,7 +108,7 @@
     },
     "TX00": {
       "dams": [
-        // 在大台中每20個tick中有量買進大於25就進場
+        // Enter position if in the large contract there are more than 25 buy volumes within every 20 ticks
         {
           "trigger": true,
           "name": "call1",
@@ -118,7 +119,7 @@
           "blocks": []
         },
         {
-          // 在太台中,每20個tick中有量賣出大於25就出場
+          // Exit position if in the large contract there are more than 25 sell volumes within every 20 ticks
           "trigger": true,
           "name": "put1",
           "matches": [
@@ -132,44 +133,46 @@
   }
 }
 
+
 ```
 
-- 策略種子 fomSumV(aa_3).json 表示如下
+- The strategy seed [fomSumV(aa_3)] is represented as follows:
 
 ```json 
 {
   "version": "0.0.0",
   "stockNos_achieve_of": {
-    // 進場大台與小台條件都符合
+    // Entry conditions must be met for both the large and mini contracts
     "in": "allOf",
-    // 出場大台與小台條件都符合
+    // Exit conditions must be met for both the large and mini contracts
     "out": "allOf"
   },
-  "info": "in out 值是絕對值, ex: if 250 ,對call而言是250,對put而言是-250",
+  "info": "The 'in' and 'out' values are absolute. For example, if 250, it is 250 for 'call' and -250 for 'put'.",
   "stockNo": {
     "MTX00": {
-      // 小台只要量總和是-500以上就可進場
+      // Entry condition for the mini contract: cumulative volume must be greater than or equal to -500
       "in": -500,
-      // 小台只要量總和是-500以下就可出場
+      // Exit condition for the mini contract: cumulative volume must be less than or equal to -550
       "out": -550
     },
     "TX00": {
-      // 大台只要量總和是-500以上就可進場
+      // Entry condition for the large contract: cumulative volume must be greater than or equal to -500
       "in": -500,
-      // 大台只要量總和是-500以下就可出場
+      // Exit condition for the large contract: cumulative volume must be less than or equal to -550
       "out": -550
     }
   }
 }
+
 ```
 
-- 策略種子 fomKma(aa_slope_in_60_20_10_5_out_60) 表示如下
+- The strategy seed [fomKma(aa_slope_in_60_20_10_5_out_60)] is represented as follows:
 
 ```json 
 {
   "version": "0.0.0",
   "rate_of_second": 60,
-  ///計算量的均線, 以60秒為一個單位
+  // Calculate the moving average of volume, with 60 seconds as the unit
   "rule": "slope",
   "stockNos_achieve_of": {
     "in": "allOf",
@@ -177,7 +180,7 @@
   },
   "stockNo": {
     "MTX00": {
-      // 小台中, 5分/10分/20分/60分的均量 斜率都向上 才可進場, 遇到60分的量斜率若向下就出場 
+      // For the mini contract, entry is allowed only when the slope of moving averages for 5 minutes, 10 minutes, 20 minutes, and 60 minutes are all upward. Exit occurs if the 60-minute volume slope turns downward.
       "in": [
         5,
         10,
@@ -189,7 +192,7 @@
       ]
     },
     "TX00": {
-      // 大台中, 5分/10分/20分/60分的均量 斜率都向上 才可進場, 遇到60分的量斜率若向下就出場 
+      // For the large contract, entry is allowed only when the slope of moving averages for 5 minutes, 10 minutes, 20 minutes, and 60 minutes are all upward. Exit occurs if the 60-minute volume slope turns downward.
       "in": [
         5,
         10,
@@ -205,4 +208,4 @@
 
 ```
 
-- 策略種子 containNight(true): 表示計算的量是從夜盤開始
+- The strategy seed [containNight(true)] means that the volume calculation starts from the night session
